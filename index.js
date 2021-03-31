@@ -31,7 +31,6 @@ client.connect((err) => {
   app.get("/books", (req, res) => {
     collection.find({}).toArray((err, docs) => {
       res.send(docs);
-      console.log(docs);
     });
   });
 
