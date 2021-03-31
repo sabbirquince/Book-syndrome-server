@@ -20,6 +20,7 @@ app.get("/", (req, res) => {
 
 client.connect((err) => {
   const collection = client.db("book-syndrome").collection("books");
+  const orderCollection = client.db("book-syndrome").collection("orders");
 
   app.post("/addBook", (req, res) => {
     const bookInfo = req.body;
@@ -40,6 +41,23 @@ client.connect((err) => {
     collection
       .deleteOne({ _id: ObjectId(id) })
       .then((result) => res.send(result.deletedCount > 0));
+  });
+
+  app.get("/checkout/:bookId", (req, res) => {
+    const id = req.params.bookId;
+    console.log(id);
+    collection.find({ _id: ObjectId(id) }).toArray((err, docs) => {
+      res.send(docs[0]);
+    });
+
+    app.post("/placedOrder", (req, res) => {
+      const placedOrder = req.body;
+      console.log(placedOrder);
+
+      orderCollection
+        .insertOne(placedOrder)
+        .then((result) => console.log(result));
+    });
   });
 });
 
