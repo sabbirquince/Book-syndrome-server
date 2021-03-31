@@ -34,6 +34,14 @@ client.connect((err) => {
       console.log(docs);
     });
   });
+
+  app.delete("/deleteBook", (req, res) => {
+    const id = req.query.id;
+
+    collection
+      .deleteOne({ _id: ObjectId(id) })
+      .then((result) => res.send(result.deletedCount > 0));
+  });
 });
 
 app.listen(port);
