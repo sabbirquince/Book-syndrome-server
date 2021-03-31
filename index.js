@@ -53,7 +53,6 @@ client.connect((err) => {
 
   app.post("/placedOrder", (req, res) => {
     const placedOrder = req.body;
-    console.log(placedOrder);
 
     orderCollection
       .insertOne(placedOrder)
