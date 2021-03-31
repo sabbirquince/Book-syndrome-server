@@ -45,18 +45,26 @@ client.connect((err) => {
 
   app.get("/checkout/:bookId", (req, res) => {
     const id = req.params.bookId;
-    console.log(id);
+
     collection.find({ _id: ObjectId(id) }).toArray((err, docs) => {
       res.send(docs[0]);
     });
+  });
 
-    app.post("/placedOrder", (req, res) => {
-      const placedOrder = req.body;
-      console.log(placedOrder);
+  app.post("/placedOrder", (req, res) => {
+    const placedOrder = req.body;
+    console.log(placedOrder);
 
-      orderCollection
-        .insertOne(placedOrder)
-        .then((result) => console.log(result));
+    orderCollection
+      .insertOne(placedOrder)
+      .then((result) => res.send(result.insertedCount > 0));
+  });
+
+  app.post("/myOrder", (req, res) => {
+    const { email } = req.body;
+
+    orderCollection.find({ email: email }).toArray((err, docs) => {
+      res.send(docs);
     });
   });
 });
