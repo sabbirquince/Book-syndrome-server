@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(cors());
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("Hello World! This is Book Syndrome.");
 });
 
 client.connect((err) => {
